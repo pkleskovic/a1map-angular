@@ -12,7 +12,7 @@ import { PageNotFoundComponent } from './views/page-not-found/page-not-found.com
 const routes: Routes = [
   {
     path: '', component: HomepageLayoutComponent, children: [
-      { path: '', component: HomepageComponent, pathMatch: 'full' }
+      { path: '', component: HomepageComponent, pathMatch: 'full' },
     ]
   },
   {
@@ -22,7 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'app', component: CustomerLayoutComponent, children: [
-      { path: '', component: MapScreenComponent },
+      { path: '', component: MapScreenComponent, pathMatch: '' },
       { path: '**', component: PageNotFoundComponent }
     ],
   }
