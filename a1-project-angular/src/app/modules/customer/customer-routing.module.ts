@@ -8,6 +8,7 @@ import { LoginScreenComponent } from './login-screen/login-screen.component';
 import { CustomerLayoutComponent } from './customer-layout/customer-layout.component';
 import { MapScreenComponent } from './map-screen/map-screen.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
+import { UserGuard } from 'src/app/guards/user.guard';
 
 const routes: Routes = [
   {
@@ -21,11 +22,11 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'app', component: CustomerLayoutComponent, children: [
+    path: 'app', canActivateChild: [UserGuard], component: CustomerLayoutComponent, children: [
       { path: '', component: MapScreenComponent, pathMatch: '' },
-      { path: '**', component: PageNotFoundComponent }
     ],
-  }
+  },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 
