@@ -7,4 +7,9 @@ export class Product {
   price: number;
   currency: string;
   discount: number;
+
+  constructor(name: string, icon: string ){
+    this.name = name;
+    this.icon = icon;
+  }
 }
