@@ -1,6 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
-import { Subject } from 'rxjs';
 import { ProductExchangeService } from 'src/app/services/product-exchange.service';
 
 @Component({
@@ -10,8 +9,8 @@ import { ProductExchangeService } from 'src/app/services/product-exchange.servic
   providers: [ProductExchangeService]
 })
 export class CustomerLayoutComponent implements OnInit {
-isCollapsed = false;
-testProduct = new Product('Test', '#00FF00');
+  testProduct = new Product('Test', '#00FF00');
+  isCollapsed = false;
 
 constructor(private productService: ProductExchangeService) { }
 

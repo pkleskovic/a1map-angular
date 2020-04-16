@@ -9,8 +9,6 @@ export class HomepageComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-    console.log('werks');
-  }
+  ngOnInit(): void { }
 
 }

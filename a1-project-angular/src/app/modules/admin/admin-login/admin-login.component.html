@@ -3,15 +3,15 @@
      fxLayoutAlign="center center">
   <form nz-form
         [nzLayout]="'vertical'"
-        [formGroup]="userLoginForm"
+        [formGroup]="adminLoginForm"
         (ngSubmit)="onFormSubmit()">
     <nz-card style="width:300px;"
-             nzTitle="User Login"
+             nzTitle="Admin Panel Login"
              [nzActions]="[actionLogin]">
       <nz-form-item>
         <nz-form-control nzErrorTip="Please input your e-mail!">
           <nz-input-group nzPrefixIcon="mail">
-            <input formControlName="userEmail"
+            <input formControlName="adminEmail"
                    nz-input
                    placeholder="Email" />
           </nz-input-group>
@@ -20,7 +20,7 @@
       <nz-form-item>
         <nz-form-control nzErrorTip="Please input your Password!">
           <nz-input-group nzPrefixIcon="lock">
-            <input formControlName="userPassword" nz-input type="password" placeholder="Password" />
+            <input formControlName="adminPassword" nz-input type="password" placeholder="Password" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>

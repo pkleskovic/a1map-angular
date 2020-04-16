@@ -1,7 +1,7 @@
 import { Product } from './product.model';
 
 export class Bill {
-  id: number;
+  id: string;
   date: string;
   userId: number;
   products: Array<Product>;
