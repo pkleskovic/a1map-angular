@@ -63,12 +63,9 @@ export class AuthService {
   async isLoggedIn(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       firebase.auth().onAuthStateChanged(user => {
-        console.log(user);
         if (user) {
-          console.log('is');
           resolve(true);
         } else {
-          console.log('is not');
           resolve(false);
         }
       });
@@ -79,8 +76,6 @@ export class AuthService {
   async isLoggedInAndIsAdmin(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       firebase.auth().onAuthStateChanged(user => {
-        console.log('admin login triggered');
-        console.log(user);
         if (!user) {
           resolve(false);
         } else {
@@ -88,10 +83,8 @@ export class AuthService {
           const item = userRef.valueChanges();
           item.subscribe((ind: FirestoreUser) => {
             if (ind.admin) {
-              console.log('is  ' + console.log(ind));
               resolve(true);
             } else {
-              console.log('is not');
               resolve(false);
             }
           });
@@ -106,13 +99,15 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     const data: User = {
       uid: user.uid,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
       email: user.email
     };
 
-
     return userRef.set(data, { merge: true });
+  }
+
+  createNewUser(email: string, password: string) {
+    this.afAuth.createUserWithEmailAndPassword(email, password).then((credential) => {
+      this.updateUserData(credential.user);
+    });
   }
 }

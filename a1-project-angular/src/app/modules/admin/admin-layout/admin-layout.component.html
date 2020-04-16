@@ -17,20 +17,24 @@
         [nzInlineCollapsed]="isCollapsed">
       <li nz-submenu
           nzOpen
-          nzTitle="Dashboard"
+          nzTitle="Admin panel"
           nzIcon="dashboard">
         <ul>
           <li nz-menu-item
               nzMatchRouter>
-            <a routerLink="/welcome">Welcome</a>
+            <a routerLink="dashboard">Dashboard</a>
           </li>
           <li nz-menu-item
               nzMatchRouter>
-            <a>Monitor</a>
+            <a routerLink="products">Products</a>
           </li>
           <li nz-menu-item
               nzMatchRouter>
-            <a>Workplace</a>
+            <a routerLink="bills">Bills</a>
+          </li>
+          <li nz-menu-item
+              nzMatchRouter>
+            <a routerLink="users">Users</a>
           </li>
         </ul>
       </li>
@@ -39,6 +43,10 @@
           nzTitle="Your Account"
           nzIcon="form">
         <ul>
+          <li nz-menu-item
+              nzMatchRouter>
+            <a (click)="showModal()">Edit Profile</a>
+          </li>
           <li nz-menu-item
               nzMatchRouter>
             <button nz-button
@@ -69,3 +77,35 @@
     </nz-content>
   </nz-layout>
 </nz-layout>
+
+<nz-modal [(nzVisible)]="modalIsVisible"
+          nzTitle="Edit your user details"
+          (nzOnOk)="submitForm()"
+          (nzOnCancel)= "handleCancel()">
+  <form nz-form
+        [formGroup]="editUserForm"
+        (ngSubmit)="submitForm()"
+        nzLayout="vertical">
+    <nz-form-item>
+      <nz-form-label nzFor="email">Email</nz-form-label>
+      <nz-form-control nzErrorTip="Please input the product name">
+        <input type="email"
+               nz-input
+               [ngModel]="firestoreUser.email"
+               disabled
+               formControlName="email"
+               placeholder="Ex. john.doe@example.com" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzFor="displayName">Display Name</nz-form-label>
+      <nz-form-control nzErrorTip="Please enter your name and surname">
+        <input type="text"
+               nz-input
+               [ngModel]="firestoreUser.displayName"
+               formControlName="displayName"
+               placeholder="Ex. John Doe" />
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>
