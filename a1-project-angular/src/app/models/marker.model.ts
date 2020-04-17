@@ -1,10 +1,20 @@
 import { Product } from './product.model';
 
 export class Marker {
-  id: number;
+  id: string;
   product: Product;
-  userId: number;
-  billId: number;
-  position: google.maps.LatLngLiteral;
-  area: Array<google.maps.LatLngLiteral>;
+  userId: string;
+  billId: string;
+  position: google.maps.LatLng;
+  area: Array<google.maps.LatLng>;
+
+  constructor(
+    product: Product,
+    userId: string,
+    position: google.maps.LatLng
+    ){
+      this.product = product;
+      this.userId = userId;
+      this.position = position;
+    }
 }
