@@ -54,7 +54,6 @@ export class CustomerLayoutComponent implements OnInit {
 
     this.productService.sendProduct(product);
     // this.emitter.emit(this.testProduct);
-    console.log('sent');
   }
 
   signUserOut() {

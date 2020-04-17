@@ -32,7 +32,7 @@ export class MapScreenComponent implements OnInit, OnDestroy {
   icon = {
     path: 'M-20,0a20,20 0 1,0 40,0a20,20 0 1,0 -40,0',
     fillColor: '#ff0000',
-    fillOpacity: .6,
+    fillOpacity: .8,
     anchor: new google.maps.Point(0, 0),
     strokeWeight: 0,
     scale: 0.2,
@@ -50,7 +50,13 @@ export class MapScreenComponent implements OnInit, OnDestroy {
   zoom = 15;
   center: google.maps.LatLngLiteral;
   options: google.maps.MapOptions = {
-    mapTypeId: 'hybrid'
+    styles: [
+      {
+        featureType: 'poi',
+        elementType: 'labels',
+        stylers: [{ visibility: 'off' }]
+      }
+    ]
   };
 
   markers = [];
@@ -86,12 +92,8 @@ export class MapScreenComponent implements OnInit, OnDestroy {
         };
       });
 
-      console.log(this.receivedMarkers);
       this.receivedMarkers.forEach(marker => {
         if (marker.userId === this.user.uid) {
-          console.log(marker.position);
-          this.icon.fillColor = marker.product.icon;
-          console.log(this.icon.fillColor);
           this.markerPositions.push(marker.position as unknown as google.maps.LatLngLiteral);
         }
       });
@@ -100,11 +102,9 @@ export class MapScreenComponent implements OnInit, OnDestroy {
 
   ngAfterInit() {
     // this.product.subscribe
-    console.log(this.recievedProduct.name);
   }
 
   addMarker(event: google.maps.MouseEvent) {
-    console.log(this.recievedProduct.name);
     this.markerPositions.push(event.latLng.toJSON());
 
     this.currentBillMarkers.push(new Marker(
@@ -127,7 +127,6 @@ export class MapScreenComponent implements OnInit, OnDestroy {
   }
 
   orderButtonClicked() {
-    console.log(this.currentBillMarkers);
     this.showModal();
   }
 
@@ -138,8 +137,7 @@ export class MapScreenComponent implements OnInit, OnDestroy {
 
   createBill() {
     this.currentBillMarkers.forEach(marker => {
-      console.log(marker.product);
-      console.log(this.orderProductArray);
+
       this.createMarker(JSON.parse(JSON.stringify(marker)));
       this.orderProductArray.push(marker.product);
     });
@@ -175,12 +173,10 @@ export class MapScreenComponent implements OnInit, OnDestroy {
   }
 
   createNewBill(bill: Bill) {
-    console.log(bill);
     this.firestoreBillService.createBill(bill);
   }
 
   createMarker(marker: Marker) {
-    console.log(marker);
     this.firestoreMarkerService.createMarker(marker);
   }
 }
