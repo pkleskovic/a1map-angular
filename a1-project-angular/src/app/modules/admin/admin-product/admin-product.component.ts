@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
 import { FirestoreProductService } from 'src/app/services/db/product/firestore-product.service';
 import { FormGroup, FormControl } from '@angular/forms';
+import { UploadChangeParam } from 'ng-zorro-antd/upload';
+import { FirestoreImageUploadService } from 'src/app/services/db/firestore/firestore-image-upload.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-admin-product',
@@ -25,7 +28,10 @@ export class AdminProductComponent implements OnInit {
     discount: new FormControl('')
   });
 
-  constructor(private productService: FirestoreProductService) { }
+  constructor(
+    private productService: FirestoreProductService,
+    private imageService: FirestoreImageUploadService
+  ) { }
 
   ngOnInit() {
     this.productService.getProducts().subscribe(data => {
@@ -41,8 +47,8 @@ export class AdminProductComponent implements OnInit {
     });
   }
 
-  create(product: Product){
-      this.productService.createProduct(product);
+  create(product: Product) {
+    this.productService.createProduct(product);
   }
 
   update(product: Product) {
@@ -95,5 +101,11 @@ export class AdminProductComponent implements OnInit {
   submitForm() {
     this.create(this.addNewProductForm.value);
     this.modalIsVisible = false;
+  }
+
+  handleFileUpload(event, product: Product) {
+    console.log(product);
+    console.log(event);
+    this.imageService.startUpload(event, product);
   }
 }

@@ -11,7 +11,7 @@
               [position]="markerPosition"
               [options]="markerOptions"
               (mapClick)="openInfoWindow(marker)"></map-marker>
-  <map-info-window>Info Window content</map-info-window>
+  <map-info-window *ngFor="let marker of currentBillMarkers">{{marker.product.description}}</map-info-window>
 </google-map>
 
 <button nz-button
@@ -50,18 +50,25 @@
           <td>{{ marker.product.name }}</td>
           <td>{{ marker.product.price }} {{ marker.product.currency }}</td>
           <td>{{ marker.product.discount }}%</td>
-          <td>{{ calculateItemDiscount(marker.product.price, marker.product.discount) }} {{marker.product.currency }}</td>
+          <td>{{ calculateItemDiscount(marker.product.price, marker.product.discount) }} {{marker.product.currency }}
+          </td>
         </ng-container>
       </tr>
     </tbody>
   </nz-table>
   <nz-row nzJustify="end">
     <nz-col>
-      <nz-statistic [nzValue]="calculateTotal() | number: '1.0-2'" [nzTitle]="'Bill total'"></nz-statistic>
+      <nz-statistic [nzValue]="calculateTotal() | number: '1.0-2'"
+                    [nzTitle]="'Bill total'"></nz-statistic>
     </nz-col>
   </nz-row>
   <ng-template #modalFooter>
-    <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
-    <button nz-button nzType="primary" (click)="createBill()" [nzLoading]="isLoading">Confirm Order</button>
+    <button nz-button
+            nzType="default"
+            (click)="handleCancel()">Cancel</button>
+    <button nz-button
+            nzType="primary"
+            (click)="createBill()"
+            [nzLoading]="isLoading">Confirm Order</button>
   </ng-template>
 </nz-modal>

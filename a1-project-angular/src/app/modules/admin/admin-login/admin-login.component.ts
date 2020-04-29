@@ -9,6 +9,8 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 export class AdminLoginComponent implements OnInit {
 
+  loginError = false;
+
   adminLoginForm = new FormGroup({
     adminEmail: new FormControl(''),
     adminPassword: new FormControl('')

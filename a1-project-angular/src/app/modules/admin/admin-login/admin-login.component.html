@@ -1,6 +1,8 @@
 <div class="loginBackgroundGradient"
      fxLayout="column"
      fxLayoutAlign="center center">
+
+  <nz-alert *ngIf="loginError" nzType="error" nzMessage="Error" nzDescription="Invalid username and/or password." nzShowIcon> </nz-alert>
   <form nz-form
         [nzLayout]="'vertical'"
         [formGroup]="adminLoginForm"

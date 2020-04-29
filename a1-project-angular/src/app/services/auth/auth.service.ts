@@ -56,7 +56,21 @@ export class AuthService {
   async signInWithEmail(email: string, password: string) {
     await this.afAuth.signInWithEmailAndPassword(email, password).then((credential) => {
       this.updateUserData(credential.user);
-      this.router.navigate(['/app']);
+
+      // This section is honestly a convoluted mess and can be improved significantly, but considering the rush this is wip
+      this.isLoggedInAndIsAdmin().then(response => {
+        // Checks if the user is logged in as the admin, if not, reroute to the user screen
+        if (response) {
+          // Checks if the user is currently trying to log into the admin panel, if not, will reroute to app
+          if (this.router.url === '/admin/login') {
+            this.router.navigate(['/admin/dashboard']);
+          } else {
+            this.router.navigate(['/app']);
+          }
+        } else {
+          this.router.navigate(['/app']);
+        }
+      });
     });
   }
 
@@ -77,16 +91,24 @@ export class AuthService {
     return new Promise<boolean>((resolve, reject) => {
       firebase.auth().onAuthStateChanged(user => {
         if (!user) {
+          console.log('issLoggedInAndIsAdmin derped, did not find the user');
           resolve(false);
         } else {
+          console.log('issLoggedInAndIsAdmin found the user: ' + user.uid);
           const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-          const item = userRef.valueChanges();
-          item.subscribe((ind: FirestoreUser) => {
-            if (ind.admin) {
-              resolve(true);
-            } else {
-              resolve(false);
-            }
+          console.log(userRef);
+          userRef.valueChanges().subscribe((ind: FirestoreUser) => {
+            console.log('ind');
+            console.log(ind);
+            // Workaround, I am waiting for the next tick, because usually it would return everything except for the admin data
+            setTimeout(() => {
+              if (ind.admin) {
+                console.log('issLoggedInAndIsAdmin found the admin: ' + ind.admin);
+                resolve(true);
+              } else {
+                console.log('issLoggedInAndIsAdmin did not find that the user is admin: ' + ind.admin);
+              }
+            });
           });
         }
       });

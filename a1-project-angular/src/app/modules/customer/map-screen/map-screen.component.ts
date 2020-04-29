@@ -86,6 +86,7 @@ export class MapScreenComponent implements OnInit, OnDestroy {
 
     this.firestoreMarkerService.getMarkers().subscribe(data => {
       this.receivedMarkers = data.map(e => {
+        console.log(e.payload.doc.data());
         return {
           id: e.payload.doc.id,
           ...e.payload.doc.data() as Marker
