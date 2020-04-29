@@ -11,6 +11,8 @@ import { CustomerRoutingModule } from './customer-routing.module';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { IconsProviderModule } from 'src/app/icons-provider.module';
 import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -29,6 +31,9 @@ import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
     GoogleMapsModule,
     IconsProviderModule,
     NgZorroAntdModule,
+    FlexLayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class CustomerModule { }

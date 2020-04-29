@@ -6,42 +6,44 @@
             [(nzCollapsed)]="isCollapsed"
             [nzTrigger]="null">
     <div class="sidebar-logo">
-      <a href="https://ng.ant.design/" target="_blank">
-        <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
-        <h1>Ant Design Of Angular</h1>
+      <a href="https://a1.hr/" target="_blank">
+        <img src="../../../../assets/images/A1_01_08RED_3_L-1024x1024.png" alt="logo">
+        <h1>A1 Hrvatska</h1>
       </a>
     </div>
     <ul nz-menu
-        nzTheme="dark"
+        nzTheme="light"
         nzMode="inline"
         [nzInlineCollapsed]="isCollapsed">
       <li nz-submenu
           nzOpen
-          nzTitle="Dashboard"
-          nzIcon="dashboard">
+          nzTitle="Products"
+          nzIcon="environment">
         <ul>
           <li nz-menu-item
-              nzMatchRouter>
-            <a routerLink="/welcome">Welcome</a>
-          </li>
-          <li nz-menu-item
-              nzMatchRouter>
-            <a>Monitor</a>
-          </li>
-          <li nz-menu-item
-              nzMatchRouter>
-            <a>Workplace</a>
+              nzMatchRouter
+              *ngFor="let product of products">
+            <a (click)="send(product)">{{product.name}}</a>
           </li>
         </ul>
       </li>
       <li nz-submenu
           nzOpen
-          nzTitle="Form"
+          nzTitle="Your Account"
           nzIcon="form">
         <ul>
           <li nz-menu-item
               nzMatchRouter>
-            <a>Basic Form</a>
+            <a (click)="showModal()">Edit Profile</a>
+          </li>
+          <li nz-menu-item
+              nzMatchRouter>
+            <button nz-button
+                    nzType="primary"
+                    nzDanger
+                    (click)="signUserOut()">
+              Log Out
+            </button>
           </li>
         </ul>
       </li>
@@ -63,3 +65,35 @@
     </nz-content>
   </nz-layout>
 </nz-layout>
+
+<nz-modal [(nzVisible)]="modalIsVisible"
+          nzTitle="Edit your user details"
+          (nzOnOk)="submitForm()"
+          (nzOnCancel)= "handleCancel()">
+  <form nz-form
+        [formGroup]="editUserForm"
+        (ngSubmit)="submitForm()"
+        nzLayout="vertical">
+    <nz-form-item>
+      <nz-form-label nzFor="email">Email</nz-form-label>
+      <nz-form-control nzErrorTip="Please input the product name">
+        <input type="email"
+               nz-input
+               [ngModel]="firestoreUser.email"
+               disabled
+               formControlName="email"
+               placeholder="Ex. john.doe@example.com" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzFor="displayName">Display Name</nz-form-label>
+      <nz-form-control nzErrorTip="Please enter your name and surname">
+        <input type="text"
+               nz-input
+               [ngModel]="firestoreUser.displayName"
+               formControlName="displayName"
+               placeholder="Ex. John Doe" />
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>
