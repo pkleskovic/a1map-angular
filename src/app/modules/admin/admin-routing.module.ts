@@ -7,6 +7,7 @@ import { AdminProductComponent } from './admin-product/admin-product.component';
 import { AdminUserComponent } from './admin-user/admin-user.component';
 import { AdminGuard } from 'src/app/guards/admin.guard';
 import { AdminBillComponent } from './admin-bill/admin-bill.component';
+import { PageNotFoundComponent } from '../customer/views/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: 'login', component: AdminLoginComponent, pathMatch: 'full' },
@@ -16,9 +17,10 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'products', component: AdminProductComponent },
       { path: 'users', component: AdminUserComponent },
-      { path: 'bills', component: AdminBillComponent },
+      { path: 'bills', component: AdminBillComponent }
     ]
-  }
+  },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 
