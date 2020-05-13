@@ -107,6 +107,7 @@ export class AuthService {
                 resolve(true);
               } else {
                 console.log('issLoggedInAndIsAdmin did not find that the user is admin: ' + ind.admin);
+                resolve(false);
               }
             });
           });
